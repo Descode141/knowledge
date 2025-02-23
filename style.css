@@ -1,7 +1,20 @@
-a:link, a:visited {
+a {
     color: blue;
-    text-decoration: none; /* Giữ nguyên kiểu gạch chân */
+    text-decoration: none;
 }
+
+a:visited {
+    color: blue; /* Giữ màu xanh ngay cả khi đã bấm */
+}
+
+a:hover {
+    text-decoration: underline; /* Gạch chân khi di chuột vào */
+}
+
+a:active {
+    color: red; /* Chuyển sang màu đỏ khi bấm */
+}
+
 footer {
     position: fixed;
     bottom: 10px;
