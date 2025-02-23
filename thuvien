@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docs Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Thư viện tài liệu</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Homepage</a></li>
+                <li><a href="docs.html">Docs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Thêm lĩnh vực mới</h2>
+            <form id="addCategoryForm">
+                <input type="text" id="categoryName" placeholder="Tên lĩnh vực" required>
+                <button type="submit">Thêm</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Thêm bài viết</h2>
+            <form id="addArticleForm">
+                <select id="categorySelect" required></select>
+                <input type="text" id="articleTitle" placeholder="Tiêu đề bài viết" required>
+                <input type="text" id="articleLink" placeholder="Liên kết bài viết" required>
+                <button type="submit">Thêm</button>
+            </form>
+        </section>
+
+        <section id="docsGrid">
+            <h2>Danh mục tài liệu</h2>
+            <div id="categoriesContainer" class="grid-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025.des</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const categoryForm = document.getElementById("addCategoryForm");
+            const articleForm = document.getElementById("addArticleForm");
+            const categorySelect = document.getElementById("categorySelect");
+            const categoriesContainer = document.getElementById("categoriesContainer");
+
+            let categories = JSON.parse(localStorage.getItem("categories")) || {};
+
+            function updateUI() {
+                categoriesContainer.innerHTML = "";
+                categorySelect.innerHTML = "";
+                Object.keys(categories).forEach(category => {
+                    let categoryDiv = document.createElement("div");
+                    categoryDiv.classList.add("category");
+                    categoryDiv.innerHTML = `<h3>${category}</h3><ul>${categories[category].map(article => `<li><a href="${article.link}">${article.title}</a></li>`).join("")}</ul>`;
+                    categoriesContainer.appendChild(categoryDiv);
+                    
+                    let option = document.createElement("option");
+                    option.value = category;
+                    option.textContent = category;
+                    categorySelect.appendChild(option);
+                });
+                localStorage.setItem("categories", JSON.stringify(categories));
+            }
+
+            categoryForm.addEventListener("submit", event => {
+                event.preventDefault();
+                const categoryName = document.getElementById("categoryName").value.trim();
+                if (categoryName && !categories[categoryName]) {
+                    categories[categoryName] = [];
+                    updateUI();
+                }
+                categoryForm.reset();
+            });
+
+            articleForm.addEventListener("submit", event => {
+                event.preventDefault();
+                const selectedCategory = categorySelect.value;
+                const articleTitle = document.getElementById("articleTitle").value.trim();
+                const articleLink = document.getElementById("articleLink").value.trim();
+                if (selectedCategory && articleTitle && articleLink) {
+                    categories[selectedCategory].push({ title: articleTitle, link: articleLink });
+                    updateUI();
+                }
+                articleForm.reset();
+            });
+
+            updateUI();
+        });
+    </script>
+</body>
+</html>
