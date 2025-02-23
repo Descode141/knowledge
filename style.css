@@ -1,3 +1,10 @@
-a:visited {
-    color: blue; /* hoặc bất kỳ màu nào bạn muốn */
+a:link, a:visited {
+    color: blue;
+    text-decoration: none; /* Giữ nguyên kiểu gạch chân */
+}
+footer {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-style: italic;
 }
