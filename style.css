@@ -1,23 +1,26 @@
-a {
-    color: blue;
-    text-decoration: none;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
-a:visited {
-    color: blue; /* Giữ màu xanh ngay cả khi đã bấm */
-}
-
-a:hover {
-    text-decoration: underline; /* Gạch chân khi di chuột vào */
-}
-
-a:active {
-    color: red; /* Chuyển sang màu đỏ khi bấm */
+main {
+    flex: 1;
 }
 
 footer {
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 0;
+    right: 0;
     font-style: italic;
+    padding: 10px;
+}
+
+a:active {
+    color: red;
+}
+
+a:visited {
+    color: black;
 }
